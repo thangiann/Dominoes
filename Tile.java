@@ -1,4 +1,5 @@
 public class Tile {
+
     private int left;
     private int right;
 
@@ -25,5 +26,19 @@ public class Tile {
         this.right = right;
     }
 
-    
+    //methods 
+    @Override
+    public String toString(){
+        return String.format("[%d|%d]", this.left, this.right);
+    }
+
+    public void rotate(){
+        int tmp = this.left;
+        this.left = right;
+        this.right = tmp;
+    }
+
+    public int points(){
+        return this.left + this.right;
+    }
 }
