@@ -6,7 +6,7 @@ public class Tile {
     //constructor
     public Tile(int n1, int n2){
         this.left = Math.min(n1, n2);
-        this.right = Math.min(n1, n2);
+        this.right = Math.max(n1, n2);
     }
 
     // Getters and Setters

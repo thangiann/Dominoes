@@ -10,11 +10,14 @@ public class Stock {
         int pos = 0;
         for (int i = 0; i < 7; i++){
 
-            for (int j = i; j < 7; j++){
+            int j = Integer.valueOf(i);
+
+            while(j < 7){
 
                 Tile tile = new Tile(i, j);
                 stack[pos] = tile;
                 pos++;
+                j++;
             }
         }
 
@@ -23,7 +26,7 @@ public class Stock {
 
     //helper method
     public void shuffle(){
-        for (int i = stack.length; i > 0; i--){
+        for (int i = stack.length - 1; i > 0; i--){
             int j = random.nextInt(i);
 
             Tile tmp = stack[j];
@@ -59,9 +62,24 @@ public class Stock {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < stack.length; i++){
-            sb.append(stack[i]);
+            if (stack[i] != null) {
+                sb.append(stack[i].toString() + " ");   
+            }
         }
 
         return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        
+        Stock stock = new Stock();
+
+        while (!stock.isEmpty()) {
+            
+            Tile next = stock.draw();
+            System.out.println("next tile is " + next.toString());
+
+            System.out.println(stock.toString());
+        }
     }
 }
