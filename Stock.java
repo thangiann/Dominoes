@@ -6,6 +6,7 @@ public class Stock {
 
     Random random = new Random();
 
+    //constructor
     public Stock(){
         int pos = 0;
         for (int i = 0; i < 7; i++){

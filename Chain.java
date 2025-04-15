@@ -8,6 +8,14 @@ public class Chain {
     private int left;
     private int right;
 
+    //constructor
+    public Chain(ChainElement ce){
+        this.head = ce;
+        this.tail = ce;
+        this.left = ce.getTile().getLeft();
+        this.right = ce.getTile().getRight();
+    }
+
     //setters and getters
     public ChainElement getHead() {
         return head;
@@ -95,9 +103,8 @@ public class Chain {
         
         Stock stock = new Stock();
 
-        Chain chain = new Chain();
-
-        Tile draw;
+        Tile draw = stock.draw();
+        Chain chain = new Chain(new ChainElement(draw));
 
         for (int i = 0; i < 5; i++){
 

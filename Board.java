@@ -4,6 +4,21 @@ public class Board {
     
     private Chain chain;
 
+    //constructor 
+    public Board(Tile tile){
+        ChainElement ce = new ChainElement(tile);
+        this.chain = new Chain(ce);
+    }
+
+    //setters and getters
+    public Chain getChain(){
+        return this.chain;
+    }
+
+    public void setChain(Chain chain){
+        this.chain = chain;
+    }
+
     //methods 
     public boolean isEmpty(){
         return this.chain.isEmpty();
@@ -56,11 +71,11 @@ public class Board {
         
         Stock stock = new Stock();
 
-        Board board = new Board();
-
         Random rand = new Random();
 
-        Tile draw;
+        Tile draw = stock.draw();
+
+        Board board = new Board(draw);
 
         while (!stock.isEmpty()){
 
