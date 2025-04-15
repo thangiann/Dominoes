@@ -74,6 +74,7 @@ public class Board {
         Random rand = new Random();
 
         Tile draw = stock.draw();
+        System.out.println("first is " + draw.toString());
 
         Board board = new Board(draw);
 

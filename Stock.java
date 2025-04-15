@@ -39,7 +39,12 @@ public class Stock {
     //methods
     public boolean isEmpty(){
         //check if every item in list is null(if it has been removed or "drew")
-        return stack == null;
+        for (Tile tile:stack){
+            if (tile != null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public Tile draw(){
