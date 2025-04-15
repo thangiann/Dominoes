@@ -76,13 +76,14 @@ public class Chain {
         
         ChainElement tail = this.tail;
         
-        while (tail != null){
+        while (tail.getNext() != null){
             sb.append(tail.getTile().toString());
             tail = tail.getNext();
         }
-
+        
         ChainElement head = this.head;
 
+        
         Stack<ChainElement> tmp = new Stack<>();
 
         while (head != null) {
@@ -95,7 +96,7 @@ public class Chain {
         for (ChainElement element:tmp){
             sb.append(element.getTile().toString());
         }
-
+        
         return sb.toString();
     }
 
