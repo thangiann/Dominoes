@@ -52,7 +52,7 @@ public class Chain {
 
     public void insertRight(Tile tile){
         ChainElement ce = new ChainElement(tile);
-        ce.setNext(head);
+        ce.setPrevious(head);
         this.head = ce;
         this.right = ce.getTile().getRight();
     }
@@ -63,8 +63,9 @@ public class Chain {
 
     @Override
     public String toString(){
-        StringBuilder sb = new StringBuilder();
 
+        StringBuilder sb = new StringBuilder();
+        
         ChainElement tail = this.tail;
         
         while (tail != null){
@@ -78,7 +79,7 @@ public class Chain {
 
         while (head != null) {
             tmp.push(head);
-            head = head.getNext();
+            head = head.getPrevious();
         }
 
         Collections.reverse(tmp);

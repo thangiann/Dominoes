@@ -1,7 +1,8 @@
 public class ChainElement {
     
     private Tile tile;
-    private ChainElement nexElement = null;
+    private ChainElement nextElement = null;
+    private ChainElement previousElement = null;
 
     public ChainElement(Tile tile){
         this.tile = tile;
@@ -13,11 +14,18 @@ public class ChainElement {
     }
 
     public ChainElement getNext(){
-        return this.nexElement;
+        return this.nextElement;
     }
         
     public void setNext(ChainElement element){
-        nexElement = element;
+        nextElement = element;
+    }
+    
+    public ChainElement getPrevious(){
+        return this.previousElement;
     }
         
+    public void setPrevious(ChainElement element){
+        previousElement = element;
+    }
 }
