@@ -7,6 +7,7 @@ public class ChainElement {
         this.tile = tile;
     }
 
+    //setters and getters
     public Tile getTile(){
         return this.tile;
     }

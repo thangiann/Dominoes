@@ -1,11 +1,12 @@
+import java.util.Collections;
 import java.util.Stack;
 
 public class Chain {
 
     private ChainElement head;
     private ChainElement tail;
-    private int left = tail.getTile().getLeft();
-    private int right = head.getTile().getRight();
+    private int left;
+    private int right;
 
     //setters and getters
     public ChainElement getHead() {
@@ -45,6 +46,7 @@ public class Chain {
         ChainElement ce = new ChainElement(tile);
         ce.setNext(tail);
         this.tail = ce;
+        this.left = ce.getTile().getLeft();
 
     }
 
@@ -52,6 +54,7 @@ public class Chain {
         ChainElement ce = new ChainElement(tile);
         ce.setNext(head);
         this.head = ce;
+        this.right = ce.getTile().getRight();
     }
 
     public boolean isEmpty(){
@@ -62,27 +65,50 @@ public class Chain {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
+        ChainElement tail = this.tail;
+        
+        while (tail != null){
+            sb.append(tail.getTile().toString());
+            tail = tail.getNext();
+        }
+
         ChainElement head = this.head;
 
         Stack<ChainElement> tmp = new Stack<>();
 
-        while (head.getNext() != null) {
+        while (head != null) {
             tmp.push(head);
             head = head.getNext();
         }
+
+        Collections.reverse(tmp);
 
         for (ChainElement element:tmp){
             sb.append(element.getTile().toString());
         }
 
-        ChainElement tail = this.tail;
-        
-        while (tail.getNext() != null){
-            sb.append(tail.getTile().toString());
-            tail = tail.getNext();
-        }
-
         return sb.toString();
     }
-    
+
+    public static void main(String[] args) {
+        
+        Stock stock = new Stock();
+
+        Chain chain = new Chain();
+
+        Tile draw;
+
+        for (int i = 0; i < 5; i++){
+
+            draw = stock.draw();
+            System.out.println(draw.toString());
+            chain.insertLeft(draw);
+
+            draw = stock.draw();
+            System.out.println(draw.toString());
+            chain.insertRight(draw);
+        }
+
+        System.out.println(chain.toString());
+    }
 }
