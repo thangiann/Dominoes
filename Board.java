@@ -26,7 +26,7 @@ public class Board {
 
     @Override
     public String toString(){
-        return this.chain.toString();
+        return "Board\n" + this.chain.toString();
     }
 
     public boolean matchLeft(Tile tile){
