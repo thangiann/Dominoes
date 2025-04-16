@@ -4,6 +4,12 @@ public class Hand {
     
     ArrayList<Tile> hand = new ArrayList<>();
     
+    //getters
+
+    public ArrayList<Tile> getHand(){
+        return this.hand;
+    }
+
     //methods
     public void add(Tile tile){
         this.hand.add(tile);
