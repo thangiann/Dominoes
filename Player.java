@@ -89,9 +89,6 @@ public class Player {
                         this.hand.add(draw);
                     }
                     
-                    //outer while stops
-                    input = false;
-                    
                     //if there are not cards left to draw and no possible moves
                     if (!board.match(draw)) {
                         return false;
@@ -125,6 +122,35 @@ public class Player {
                 //when there is a possible move
                 else if (index >= 0 && index < hand.getHand().size()) {
                     
+                    Tile played = hand.getTile(index);
+
+                    if (board.matchBoth(played)) {
+                        boolean ask = true;
+                        
+                        while (ask) {
+
+                            System.out.println("Left(l) of right(r)");
+                            String leftOrRight = in.nextLine().toLowerCase();
+                            
+                            if (leftOrRight == "l") {
+                                
+                                ask = false;
+                                board.addLeft(played);
+                                return true;
+                            }
+
+                            else if (leftOrRight == "r"){
+
+                                ask = false;
+                                board.addRight(played);
+                                return true;
+                            }
+                            else{
+                                System.out.println("invalid move");
+                                continue;
+                            }
+                        }
+                    }
                 }
             }
                    
@@ -134,6 +160,7 @@ public class Player {
         }
     
         in.close();
+        return false;
     }
 
     /* 
