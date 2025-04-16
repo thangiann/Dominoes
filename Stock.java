@@ -26,7 +26,7 @@ public class Stock {
     }
 
     //helper method
-    public void shuffle(){
+    private void shuffle(){
         for (int i = stack.length - 1; i > 0; i--){
             int j = random.nextInt(i);
 

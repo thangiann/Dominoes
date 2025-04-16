@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Player {
@@ -117,6 +118,14 @@ public class Player {
                             }
                         }
                     }
+                    else if (board.matchLeft(draw)) {
+                        board.addLeft(draw);
+                        return true;
+                    }
+                    else{ 
+                        board.addRight(draw);
+                        return true;
+                    }
                 }
 
                 //when there is a possible move
@@ -163,21 +172,70 @@ public class Player {
         return false;
     }
 
-    /* 
-    public void draw(Stock stock, Board board){
-        boolean draw = true;
+    public boolean computerPlay(Stock stock, Board board){
 
-        for (Tile tile:hand.getHand()){
-            if (board.match(tile)) {
-                draw = false;
+        printHand();
+        Random rand = new Random();
+
+        Tile bestTile = hand.getBestTile(board);
+
+        if (bestTile != null) {
+            if (board.matchBoth(bestTile)) {
+
+                int random = rand.nextInt(2);
+
+                if (random == 1) {
+                    board.addLeft(bestTile);
+                    return true;
+                }
+
+                else{board.addRight(bestTile);}
+                return true;
+            }
+            else if (board.matchLeft(bestTile)) {
+                board.addLeft(bestTile);
+                return true;
+            }
+        }
+        else{
+            Tile draw = stock.draw();
+            this.hand.add(draw);
+
+            //drawing until the stock is empty or there is a possible move
+            while (!board.match(draw) && !stock.isEmpty()) {
+                    draw = stock.draw();
+                    this.hand.add(draw);
+            }
+
+            if (!board.match(draw)) {
+                System.out.println("no possible moves");
+                return false;
+            }
+
+            if (board.matchBoth(draw)) {
+
+                int random = rand.nextInt(2);
+
+                if (random == 1) {
+                    board.addLeft(draw);
+                    return true;
+                }
+
+                else{board.addRight(draw);}
+                return true;
+            }
+            else if (board.matchLeft(draw)) {
+                board.addLeft(draw);
+                return true;
+            }
+            
+            else{
+                board.addRight(draw);
+                return true;
             }
         }
 
-        if (draw) {
-            
-            System.out.println("No possible moves ");
-            Tile next = stock.draw();
-        }
+        return false;
     }
-    */
+    
 }

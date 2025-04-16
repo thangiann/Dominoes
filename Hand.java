@@ -21,20 +21,22 @@ public class Hand {
 
     public Tile getBestTile(Board board){
         int points = 0;
-        int bestIndex = 0;
+        int bestIndex = -1;
 
         for (int i = 0; i < hand.size(); i++){
-            if (!board.match(hand.get(i))) {
-                return null;
-            }
 
-            if (hand.get(i).points() > points) {
+            if (hand.get(i).points() > points && board.match(hand.get(bestIndex))) {
                 points = hand.get(i).points();
                 bestIndex = i;
             }
         }
 
-        return hand.get(bestIndex);
+        if (bestIndex == -1) {
+            return null;
+        }
+        else{
+            return hand.get(bestIndex);
+        }
     }
 
     public boolean isEmpty(){
