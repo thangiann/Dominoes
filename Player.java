@@ -7,6 +7,8 @@ public class Player {
     private int points = 0;
     private String name;
 
+    private final Scanner in = new Scanner(System.in);
+
     //constructor
     public Player(String name){
         this.name = name;
@@ -85,51 +87,33 @@ public class Player {
         }
     }
     
-    public boolean play(Stock stock, Board board, Scanner in) {
+    public boolean play(Stock stock, Board board) {
 
-    printHand();   
-    boolean input = true;
-
-    while (input) {
-        System.out.print("Select a tile to play, or -1 if no tile: ");
+        printHand();   
         
-        // Check if the input is an integer
-        if (in.hasNextInt()) {
-            int index = in.nextInt();
+        boolean findMatchingTile = true;
 
-            // when there are no possible moves
+        while (findMatchingTile) {
+            int index = askPlayer();
+
             if (index == -1) {
-                //boolean returnValue = unmatchedTile(board, stock);
-                System.out.println("-1");
-                input = false;
-                return false; //returnValue;
+                unmatchedTile(board, stock);
+                findMatchingTile = false;
+                return true;
             }
-
-            // when there is a possible move
-            else if (index >= 0 && index < hand.getHand().size()) {
-                Tile played = hand.getTile(index);
-
-                if (board.match(played)) {
-                    System.out.println("match");
-                    input = false;
-                    return true;
-                }
-                else{
-                    System.out.println("cant play tile, it doesnt match");
-                }
+            else{
                 
 
-            } else {
-                System.out.println( "invalid between please select an integer between 0 and " + hand.getHand().size());
+                if (board.match(hand.getHand().get(index))) {
+                    findMatchingTile = false;
+                    matchedTile(board, hand.getTile(index));
+                    return true;
+                }
+                else {System.out.println("Invalid move");}
             }
-        } else {
-            // Flush the invalid input (if non-integer input)
-            in.next(); // Consume the invalid input (i.e., the non-integer)
-            System.out.println("invalid input, please input an integer");
-        }
     }
 
-    return false;
+    return true;
 }
 
     //helper methods 
@@ -174,24 +158,23 @@ public class Player {
             System.out.println("To be added" + tile.toString());
             board.addRight(tile);
         }
-        in.close();
+    
     }
 
     private boolean unmatchedTile(Board board, Stock stock){
 
         Tile draw = stock.draw();
-        System.out.println("Tile drawn : " + draw.toString());
 
         //drawing until the stock is empty or there is a possible move
         while (!board.match(draw) && !stock.isEmpty()) {
-            draw = stock.draw();
+            this.hand.add(draw);
             System.out.println("Tile drawn : " + draw.toString());
+            draw = stock.draw();
         }
 
         //if there are not cards left to draw and no possible moves
         if (!board.match(draw)) {
             System.out.println("No possible moves");
-            this.hand.add(draw);
             return false;
         }
         else if (board.match(draw)) {
@@ -235,7 +218,7 @@ public class Player {
         }
     }
 
-    public boolean computerUnmatchedTile(Board board, Stock stock){
+    private boolean computerUnmatchedTile(Board board, Stock stock){
         
         Tile draw = stock.draw();
         System.out.println("Tile drawn : " + draw.toString());
@@ -263,45 +246,61 @@ public class Player {
         }
     }
 
+    private int askPlayer(){     //this method will get and return the players choice
+
+        Scanner in = new Scanner(System.in);
+
+        while (true) {
+            try {
+
+                System.out.print("Select a tile to play, or -1 if no tile: ");
+                int index = in.nextInt();
+    
+                if (index == -1) {
+                    
+                    return -1;
+                } 
+                else if (index >= 0 && index < this.hand.getHand().size()) {
+                    return index;
+                } 
+                
+                else {
+                    System.out.println("Invalid input, enter a number between 0 and " + (hand.getHand().size() - 1));
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input, please input a valid number");
+                in.nextLine(); // flush the invalid input, without this it goes into aN infinite loop
+            }
+        }
+    }
+
+    
+
     public static void main(String[] args) {
         
         Stock stock = new Stock();
-        Player player = new Player("computer");
+        Player player = new Player("Than");
         Board board = new Board();
 
-        Tile first = stock.draw();
-
-        board.initiliazeBoard(new Tile(7, 7));
         player.initializeHand(stock);
         
-        System.out.println(board.toString());
+        board.initiliazeBoard(player.getHand().getTile(0));
+        
+        boolean playerMove = true;
+        int round = 0;
 
-        boolean computerMove = true;
-        int round = 1;
-
-        while (!player.emptyHand() && computerMove) {
-
-            computerMove = player.computerPlay(stock, board);
-
-            System.out.println("!player.emptyHand() " + !player.emptyHand());
-            System.out.println("computerMove " + computerMove);
-
+        while (!player.emptyHand() && playerMove) {
             System.out.println(board.toString());
+            playerMove = player.play(stock, board);
 
-            System.out.println("round " + round + "\n");
+            System.out.println("!player.emptyHand() is " + !player.emptyHand());
+            System.out.println("playerMove is " + playerMove);
+
+            System.out.println("\nround is " + round);
             round++;
-        } 
-
-        System.out.println("empty");
-
-        int rem = 0;
-        for (int i = 0; i < 28; i++){
-            if (stock.getStack()[i] != null) {
-                rem++;
-            }
         }
+        
+        System.out.println("end");
 
-        System.out.println("remaining tiles are " + rem);
-
-    } 
+    }
 }

@@ -32,7 +32,7 @@ public class DominoesRound {
 
             System.out.println(board.toString());
 
-            playerMove = player.play(stock, board, in);
+            playerMove = player.play(stock, board);
 
             System.out.println("!player.emptyHand() is " + !player.emptyHand());
             System.out.println("!computer.emptyHand() is " + !computer.emptyHand());
@@ -80,7 +80,7 @@ public class DominoesRound {
             }
         }
 
-        Tile firstTile = player.getHand().getHand().get(firstIndex);
+        Tile firstTile = player.getHand().getHand().remove(firstIndex);
         this.board.initiliazeBoard(firstTile);
     }
 
