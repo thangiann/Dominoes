@@ -21,12 +21,12 @@ public class DominoesRound {
         boolean computerMove = true;
 
         while (!player.emptyHand() && !computer.emptyHand() && (playerMove || computerMove)) {
-            board.toString();
+            System.out.println(board.toString());
 
             playerMove = player.play(stock, board);
 
-            board.toString();
-            
+            System.out.println(board.toString());
+
             computerMove = computer.computerPlay(stock, board);
         }
 
@@ -46,5 +46,11 @@ public class DominoesRound {
     private void printPoints(){
         System.out.println(player.getName() + " points:" + player.getPoints());
         System.out.println("Computer" + " points:" + player.getPoints());
+    }
+
+    public static void main(String[] args) {
+        DominoesRound dm = new DominoesRound("Thanasis");
+
+        dm.playRound();
     }
 }

@@ -25,7 +25,12 @@ public class Hand {
 
         for (int i = 0; i < hand.size(); i++){
 
-            if (hand.get(i).points() > points && board.match(hand.get(bestIndex))) {
+            if (bestIndex == -1 && board.match(hand.get(i))) {
+                points = hand.get(i).points();
+                bestIndex = i;
+            }
+
+            else if (hand.get(i).points() > points && board.match(hand.get(i))) {
                 points = hand.get(i).points();
                 bestIndex = i;
             }
@@ -34,9 +39,7 @@ public class Hand {
         if (bestIndex == -1) {
             return null;
         }
-        else{
-            return hand.get(bestIndex);
-        }
+        else{ return hand.get(bestIndex);}
     }
 
     public boolean isEmpty(){
@@ -60,10 +63,10 @@ public class Hand {
             sb.append(tile.toString() + " ");
         }
 
-        sb.append("\n");
+        sb.append("\n " + " " );
 
         for (int i = 0; i < hand.size(); i++){
-            sb.append("  " + i + "    ");
+            sb.append(+ i + "     ");
         }
 
         return sb.toString();
