@@ -25,6 +25,11 @@ public class Stock {
         shuffle();
     }
 
+    //setters and getters
+    public Tile[] getStack(){
+        return this.stack;
+    }
+    
     //helper method
     private void shuffle(){
         for (int i = stack.length - 1; i > 0; i--){

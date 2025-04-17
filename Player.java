@@ -66,118 +66,8 @@ public class Player {
     public void collectPoints(Player other){
         this.points += other.handPoints();
         other.setPoints(0);
-    }
-
-    public boolean playold(Stock stock, Board board){
-
-        printHand();
-
-        Scanner in = new Scanner(System.in);
-        boolean input = true;
-
-        while (input) {
-            try {
-
-                System.out.print("Select a tile to play, or -1 if no tile: ");
-                int index = in.nextInt();
-                in.nextLine();
-
-                System.out.println("index is " + index);
-
-                //when there are no possible moves
-                if (index == -1) {
-                    boolean returnvalue = unmatchedTile(board, stock);
-                    input = false;
-                    return returnvalue;
-                }
-
-                //when there is a possible move
-                else if (index >= 0 && index < hand.getHand().size()) {
-                    
-                    Tile played = hand.getTile(index);
-                    
-                    if (board.match(played)) {
-                        matchedTile(board, played);
-                        input = false;
-                        return true;
-                    }
-                    else{
-                        System.out.println("invalid move");
-                    }
-                }
-                
-                else{System.out.println("invalid input");}
-
-            }
-                   
-            catch (Exception e) {
-                if (in.hasNextLine()) {
-                    in.nextLine(); // clear invalid input safely
-                }
-                System.out.println("invalid input");
-            }
-        }
-        
-        System.out.println();
-
-        //in.close();
-        return false;
-    }
-
-    public boolean playold2(Stock stock, Board board){
-
-        printHand();
-
-        Scanner in = new Scanner(System.in);
-        boolean input = true;
-
-        while (input) {
-            System.out.print("Select a tile to play, or -1 if no tile: ");
-            
-            if (in.hasNextInt()) {
-                int index = in.nextInt();
-                
-                if (in.hasNextLine()) {
-                    in.nextLine();
-                }
-
-                //when there are no possible moves
-                if (index == -1) {
-                    boolean returnvalue = unmatchedTile(board, stock);
-                    input = false;
-                    return returnvalue;
-                }
-
-                //when there is a possible move
-                else if (index >= 0 && index < hand.getHand().size()) {
-                    
-                    Tile played = hand.getTile(index);
-                    
-                    if (board.match(played)) {
-                        matchedTile(board, played);
-                        input = false;
-                        return true;
-                    }
-                    else{
-                        System.out.println("invalid move");
-                    }
-                }
-                
-                else{System.out.println("invalid input");}
-
-
-            }
-            else {
-                if (in.hasNextLine()) {
-                    in.nextLine();
-                }
-                System.out.println("invalid input");
-            }        
-        }
-
-        return false;
-    }
-
+    } 
+ 
     public boolean computerPlay(Stock stock, Board board){
 
         printHand();
@@ -290,17 +180,18 @@ public class Player {
     private boolean unmatchedTile(Board board, Stock stock){
 
         Tile draw = stock.draw();
-        this.hand.add(draw);
+        System.out.println("Tile drawn : " + draw.toString());
 
         //drawing until the stock is empty or there is a possible move
         while (!board.match(draw) && !stock.isEmpty()) {
             draw = stock.draw();
-            this.hand.add(draw);
+            System.out.println("Tile drawn : " + draw.toString());
         }
 
         //if there are not cards left to draw and no possible moves
         if (!board.match(draw)) {
             System.out.println("No possible moves");
+            this.hand.add(draw);
             return false;
         }
         else if (board.match(draw)) {
@@ -323,33 +214,43 @@ public class Player {
                 int random = rand.nextInt(2);
 
                 if (random == 1) {
+                    System.out.println("Tile to be added: " + tile.toString());
                     board.addLeft(tile);
                 }
 
-                else{board.addRight(tile);}
+                else{
+                    System.out.println("Tile to be added: " + tile.toString());
+                    board.addRight(tile);
+                }
             }
             
         }
         else if (board.matchLeft(tile)) {
+            System.out.println("Tile to be added: " + tile.toString());
             board.addLeft(tile);
         }
-        else{board.addRight(tile);}
+        else{
+            System.out.println("Tile to be added: " + tile.toString());
+            board.addRight(tile);
+        }
     }
 
     public boolean computerUnmatchedTile(Board board, Stock stock){
         
         Tile draw = stock.draw();
-        this.hand.add(draw);
+        System.out.println("Tile drawn : " + draw.toString());
+        
 
         //drawing until the stock is empty or there is a possible move
         while (!board.match(draw) && !stock.isEmpty()) {
             draw = stock.draw();
-            this.hand.add(draw);
+            System.out.println("Tile drawn : " + draw.toString());
         }
 
         //if there are not cards left to draw and no possible moves
         if (!board.match(draw)) {
             System.out.println("No possible moves");
+            this.hand.add(draw);
             return false;
         }
         else if (board.match(draw)) {
@@ -370,7 +271,7 @@ public class Player {
 
         Tile first = stock.draw();
 
-        board.initiliazeBoard(first);
+        board.initiliazeBoard(new Tile(7, 7));
         player.initializeHand(stock);
         
         System.out.println(board.toString());
@@ -392,5 +293,15 @@ public class Player {
         } 
 
         System.out.println("empty");
+
+        int rem = 0;
+        for (int i = 0; i < 28; i++){
+            if (stock.getStack()[i] != null) {
+                rem++;
+            }
+        }
+
+        System.out.println("remaining tiles are " + rem);
+
     } 
 }
