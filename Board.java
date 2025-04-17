@@ -4,12 +4,6 @@ public class Board {
     
     private Chain chain;
 
-    //constructor 
-    public Board(Tile tile){
-        ChainElement ce = new ChainElement(tile);
-        this.chain = new Chain(ce);
-    }
-
     //setters and getters
     public Chain getChain(){
         return this.chain;
@@ -67,6 +61,11 @@ public class Board {
         return;
     }
 
+    public void initiliazeBoard(Tile tile){
+        ChainElement ce = new ChainElement(tile);
+        this.chain = new Chain(ce);
+    }
+    
     public static void main(String[] args) {
         
         Stock stock = new Stock();
@@ -76,7 +75,8 @@ public class Board {
         Tile draw = stock.draw();
         System.out.println("first is " + draw.toString());
 
-        Board board = new Board(draw);
+        Board board = new Board();
+        board.initiliazeBoard(draw);
 
         while (!stock.isEmpty()){
 

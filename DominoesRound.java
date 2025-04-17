@@ -10,8 +10,7 @@ public class DominoesRound {
     public DominoesRound(String name){
         player = new Player(name);
         computer = new Player("Computer");
-        Tile first = stock.draw();
-        board = new Board(first);
+        Board board = new Board();
     }
 
     public void playRound(Scanner in){
@@ -22,7 +21,23 @@ public class DominoesRound {
         boolean playerMove = true;
         boolean computerMove = true;
 
+        boolean first = true;
+        int firstIndex = -1;
+
+        while (first) {
+            firstIndex = in.nextInt();
+
+            if (firstIndex >= 0 && firstIndex < 7) {
+                first = false;
+            }
+        }
+        
+        Tile firstTile = player.getHand().getHand().get(firstIndex);
+         
+
         while (!player.emptyHand() && !computer.emptyHand() && (playerMove || computerMove)) {
+
+            
             System.out.println(board.toString());
 
             playerMove = player.play(stock, board, in);
@@ -30,6 +45,11 @@ public class DominoesRound {
             System.out.println(board.toString());
 
             computerMove = computer.computerPlay(stock, board);
+
+            System.out.println("!player.emptyHand() is " + !player.emptyHand());
+            System.out.println("!computer.emptyHand() is " + !computer.emptyHand());
+            System.out.println("playerMove is " + playerMove);
+            System.out.println("computerMove is " + computerMove);
         }
 
         if (player.emptyHand()) {
@@ -41,6 +61,12 @@ public class DominoesRound {
             System.out.println("Computer won! Emptied Hand");
             computer.collectPoints(computer);
             printPoints();
+        }
+        else{
+            if (computer.getPoints() > player.getPoints()) {
+                System.out.println("Computer won! No possible moves");
+
+            }
         }
     }
 

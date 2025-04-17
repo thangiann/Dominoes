@@ -257,10 +257,10 @@ public class Player {
 
             // when there are no possible moves
             if (index == -1) {
-                boolean returnValue = unmatchedTile(board, stock);
+                //boolean returnValue = unmatchedTile(board, stock);
                 System.out.println("-1");
                 input = false;
-                return returnValue;
+                return false; //returnValue;
             }
 
             // when there is a possible move
@@ -268,19 +268,22 @@ public class Player {
                 Tile played = hand.getTile(index);
 
                 if (board.match(played)) {
-                    matchedTile(board, played);
+                    System.out.println("match");
                     input = false;
                     return true;
-                } else {
-                    System.out.println("Invalid move");
                 }
+                else{
+                    System.out.println("cant play tile, it doesnt match");
+                }
+                
+
             } else {
-                System.out.println("Invalid input");
+                System.out.println( "invalid between please select an integer between 0 and " + hand.getHand().size());
             }
         } else {
             // Flush the invalid input (if non-integer input)
             in.next(); // Consume the invalid input (i.e., the non-integer)
-            System.out.println("Invalid input. Please enter a valid integer.");
+            System.out.println("invalid input, please input an integer");
         }
     }
 

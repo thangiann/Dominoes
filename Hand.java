@@ -5,7 +5,6 @@ public class Hand {
     ArrayList<Tile> hand = new ArrayList<>();
     
     //getters
-
     public ArrayList<Tile> getHand(){
         return this.hand;
     }
@@ -16,7 +15,7 @@ public class Hand {
     }
 
     public Tile getTile(int index){
-        return hand.get(index);
+        return hand.remove(index);
     }
 
     public Tile getBestTile(Board board){
@@ -39,7 +38,7 @@ public class Hand {
         if (bestIndex == -1) {
             return null;
         }
-        else{ return hand.get(bestIndex);}
+        else{ return hand.remove(bestIndex);}
     }
 
     public boolean isEmpty(){
