@@ -243,9 +243,9 @@ public class Player {
         return false;
     }
     
-    public boolean play(Stock stock, Board board) {
-    printHand();
-    Scanner in = new Scanner(System.in);
+    public boolean play(Stock stock, Board board, Scanner in) {
+
+    printHand();   
     boolean input = true;
 
     while (input) {
@@ -258,6 +258,7 @@ public class Player {
             // when there are no possible moves
             if (index == -1) {
                 boolean returnValue = unmatchedTile(board, stock);
+                System.out.println("-1");
                 input = false;
                 return returnValue;
             }

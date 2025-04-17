@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class DominoesRound {
     
     Player player;
@@ -12,7 +14,7 @@ public class DominoesRound {
         board = new Board(first);
     }
 
-    public void playRound(){
+    public void playRound(Scanner in){
 
         player.initializeHand(stock);
         computer.initializeHand(stock);
@@ -23,7 +25,7 @@ public class DominoesRound {
         while (!player.emptyHand() && !computer.emptyHand() && (playerMove || computerMove)) {
             System.out.println(board.toString());
 
-            playerMove = player.play(stock, board);
+            playerMove = player.play(stock, board, in);
 
             System.out.println(board.toString());
 
@@ -51,6 +53,8 @@ public class DominoesRound {
     public static void main(String[] args) {
         DominoesRound dm = new DominoesRound("Thanasis");
 
-        dm.playRound();
+        Scanner in = new Scanner(System.in);
+
+        dm.playRound(in);
     }
 }
