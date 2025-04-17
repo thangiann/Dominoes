@@ -33,6 +33,7 @@ public class DominoesRound {
         }
         
         Tile firstTile = player.getHand().getHand().get(firstIndex);
+        this.board.initiliazeBoard(firstTile);
          
 
         while (!player.emptyHand() && !computer.emptyHand() && (playerMove || computerMove)) {
