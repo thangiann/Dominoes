@@ -5,7 +5,7 @@ public class DominoesRound {
     Player player;
     Player computer;
     Stock stock = new Stock();
-    Board board;
+    Board board = new Board();
 
     public DominoesRound(String name){
         player = new Player(name);
@@ -21,31 +21,18 @@ public class DominoesRound {
         boolean playerMove = true;
         boolean computerMove = true;
 
-        boolean first = true;
-        int firstIndex = -1;
-
-        while (first) {
-            firstIndex = in.nextInt();
-
-            if (firstIndex >= 0 && firstIndex < 7) {
-                first = false;
-            }
-        }
-        
-        Tile firstTile = player.getHand().getHand().get(firstIndex);
-        this.board.initiliazeBoard(firstTile);
-         
+        initializeDominoesRound(in);         
 
         while (!player.emptyHand() && !computer.emptyHand() && (playerMove || computerMove)) {
 
             
             System.out.println(board.toString());
 
-            playerMove = player.play(stock, board, in);
+            computerMove = computer.computerPlay(stock, board);
 
             System.out.println(board.toString());
 
-            computerMove = computer.computerPlay(stock, board);
+            playerMove = player.play(stock, board, in);
 
             System.out.println("!player.emptyHand() is " + !player.emptyHand());
             System.out.println("!computer.emptyHand() is " + !computer.emptyHand());
@@ -74,7 +61,27 @@ public class DominoesRound {
     //helper methods
     private void printPoints(){
         System.out.println(player.getName() + " points:" + player.getPoints());
-        System.out.println("Computer" + " points:" + player.getPoints());
+        System.out.println("Computer" + " points:" + computer.getPoints());
+    }
+
+    private void initializeDominoesRound(Scanner in){
+        System.out.println("Board\n");
+        player.printHand();
+
+        boolean first = true;
+        int firstIndex = -1;
+
+        while (first) {
+            System.out.print("Select a tile to play: ");
+            firstIndex = in.nextInt();
+
+            if (firstIndex >= 0 && firstIndex < 7) {
+                first = false;
+            }
+        }
+
+        Tile firstTile = player.getHand().getHand().get(firstIndex);
+        this.board.initiliazeBoard(firstTile);
     }
 
     public static void main(String[] args) {

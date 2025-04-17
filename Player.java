@@ -65,6 +65,7 @@ public class Player {
 
     public void collectPoints(Player other){
         this.points += other.handPoints();
+        other.setPoints(0);
     }
 
     public boolean playold(Stock stock, Board board){
@@ -180,67 +181,18 @@ public class Player {
     public boolean computerPlay(Stock stock, Board board){
 
         printHand();
-        Random rand = new Random();
 
         Tile bestTile = hand.getBestTile(board);
 
         if (bestTile != null) {
-            if (board.matchBoth(bestTile)) {
-
-                int random = rand.nextInt(2);
-
-                if (random == 1) {
-                    board.addLeft(bestTile);
-                    return true;
-                }
-
-                else{board.addRight(bestTile);}
-                return true;
-            }
-            else if (board.matchLeft(bestTile)) {
-                board.addLeft(bestTile);
-                return true;
-            }
+            
+            computerMatchedTile(board, bestTile);
+            return true;
         }
         else{
-            Tile draw = stock.draw();
-            this.hand.add(draw);
-
-            //drawing until the stock is empty or there is a possible move
-            while (!board.match(draw) && !stock.isEmpty()) {
-                    draw = stock.draw();
-                    this.hand.add(draw);
-            }
-
-            if (!board.match(draw)) {
-                System.out.println("no possible moves");
-                return false;
-            }
-
-            if (board.matchBoth(draw)) {
-
-                int random = rand.nextInt(2);
-
-                if (random == 1) {
-                    board.addLeft(draw);
-                    return true;
-                }
-
-                else{board.addRight(draw);}
-                return true;
-            }
-            else if (board.matchLeft(draw)) {
-                board.addLeft(draw);
-                return true;
-            }
-            
-            else{
-                board.addRight(draw);
-                return true;
-            }
+            boolean computerMove = computerUnmatchedTile(board, stock);
+            return computerMove;
         }
-
-        return false;
     }
     
     public boolean play(Stock stock, Board board, Scanner in) {
@@ -336,6 +288,7 @@ public class Player {
     }
 
     private boolean unmatchedTile(Board board, Stock stock){
+
         Tile draw = stock.draw();
         this.hand.add(draw);
 
@@ -359,4 +312,85 @@ public class Player {
             return false;
         }
     }
+
+    private void computerMatchedTile(Board board, Tile tile){
+
+        Random rand = new Random();
+
+        if (board.matchBoth(tile)) {
+            if (board.matchBoth(tile)) {
+
+                int random = rand.nextInt(2);
+
+                if (random == 1) {
+                    board.addLeft(tile);
+                }
+
+                else{board.addRight(tile);}
+            }
+            
+        }
+        else if (board.matchLeft(tile)) {
+            board.addLeft(tile);
+        }
+        else{board.addRight(tile);}
+    }
+
+    public boolean computerUnmatchedTile(Board board, Stock stock){
+        
+        Tile draw = stock.draw();
+        this.hand.add(draw);
+
+        //drawing until the stock is empty or there is a possible move
+        while (!board.match(draw) && !stock.isEmpty()) {
+            draw = stock.draw();
+            this.hand.add(draw);
+        }
+
+        //if there are not cards left to draw and no possible moves
+        if (!board.match(draw)) {
+            System.out.println("No possible moves");
+            return false;
+        }
+        else if (board.match(draw)) {
+            computerMatchedTile(board, draw);
+            return true;
+        }
+        else{
+            System.out.println("out of stock");
+            return false;
+        }
+    }
+
+    public static void main(String[] args) {
+        
+        Stock stock = new Stock();
+        Player player = new Player("computer");
+        Board board = new Board();
+
+        Tile first = stock.draw();
+
+        board.initiliazeBoard(first);
+        player.initializeHand(stock);
+        
+        System.out.println(board.toString());
+
+        boolean computerMove = true;
+        int round = 1;
+
+        while (!player.emptyHand() && computerMove) {
+
+            computerMove = player.computerPlay(stock, board);
+
+            System.out.println("!player.emptyHand() " + !player.emptyHand());
+            System.out.println("computerMove " + computerMove);
+
+            System.out.println(board.toString());
+
+            System.out.println("round " + round + "\n");
+            round++;
+        } 
+
+        System.out.println("empty");
+    } 
 }
