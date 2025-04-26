@@ -35,8 +35,6 @@ public class Hand {
             }
         }
 
-        System.out.println("best tile " + (bestIndex == -1 ? "null": hand.get(bestIndex).toString()));
-
         if (bestIndex == -1) {
             return null;
         }

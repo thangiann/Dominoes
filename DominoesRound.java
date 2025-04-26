@@ -10,10 +10,11 @@ public class DominoesRound {
     public DominoesRound(String name){
         player = new Player(name);
         computer = new Player("Computer");
-        Board board = new Board();
     }
 
-    public void playRound(Scanner in){
+    public void playRound(){
+
+        Scanner in = new Scanner(System.in);
 
         player.initializeHand(stock);
         computer.initializeHand(stock);
@@ -33,11 +34,12 @@ public class DominoesRound {
             System.out.println(board.toString());
 
             playerMove = player.play(stock, board);
-
+            
+            /* 
             System.out.println("!player.emptyHand() is " + !player.emptyHand());
             System.out.println("!computer.emptyHand() is " + !computer.emptyHand());
             System.out.println("playerMove is " + playerMove);
-            System.out.println("computerMove is " + computerMove);
+            System.out.println("computerMove is " + computerMove); */
         }
 
         if (player.emptyHand()) {
@@ -84,11 +86,4 @@ public class DominoesRound {
         this.board.initiliazeBoard(firstTile);
     }
 
-    public static void main(String[] args) {
-        DominoesRound dm = new DominoesRound("Thanasis");
-
-        Scanner in = new Scanner(System.in);
-
-        dm.playRound(in);
-    }
 }

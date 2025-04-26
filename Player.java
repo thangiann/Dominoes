@@ -117,7 +117,7 @@ public class Player {
 }
 
     //helper methods 
-    private void matchedTile(Board board, Tile tile){
+    private void matchedTile(Board board, Tile tile){   //this methods checks if the tile selected can be played or not
         Scanner in = new Scanner(System.in);
 
         if (board.matchBoth(tile)) {
@@ -143,7 +143,7 @@ public class Player {
 
                 }
                 else{
-                    System.out.println("invalid move");
+                    System.out.println("Invalid input");
                     continue;
                 }
             }
@@ -161,7 +161,7 @@ public class Player {
     
     }
 
-    private boolean unmatchedTile(Board board, Stock stock){
+    private boolean unmatchedTile(Board board, Stock stock){    //this methods draws tiles until ones one of them matched to at least one end of the chain
 
         Tile draw = stock.draw();
 
@@ -226,6 +226,7 @@ public class Player {
 
         //drawing until the stock is empty or there is a possible move
         while (!board.match(draw) && !stock.isEmpty()) {
+            this.hand.add(draw);
             draw = stock.draw();
             System.out.println("Tile drawn : " + draw.toString());
         }
