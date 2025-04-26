@@ -1,6 +1,3 @@
-import java.util.Collections;
-import java.util.Stack;
-
 public class Chain {
 
     private ChainElement head;
@@ -60,9 +57,10 @@ public class Chain {
 
     public void insertRight(Tile tile){
         ChainElement ce = new ChainElement(tile);
-        ce.setPrevious(head);
+        this.head.setNext(ce);
+
         this.head = ce;
-        this.right = ce.getTile().getRight();
+        this.right = this.head.getTile().getRight();
     }
 
     public boolean isEmpty(){
@@ -74,27 +72,11 @@ public class Chain {
 
         StringBuilder sb = new StringBuilder();
         
-        ChainElement tail = this.tail;
+        ChainElement ce = this.tail;
         
-        while (tail.getNext() != null){
-            sb.append(tail.getTile().toString());
-            tail = tail.getNext();
-        }
-        
-        ChainElement head = this.head;
-
-        
-        Stack<ChainElement> tmp = new Stack<>();
-
-        while (head != null) {
-            tmp.push(head);
-            head = head.getPrevious();
-        }
-
-        Collections.reverse(tmp);
-
-        for (ChainElement element:tmp){
-            sb.append(element.getTile().toString());
+        while (ce != null){
+            sb.append(ce.getTile().toString());
+            ce = ce.getNext();
         }
         
         return sb.toString();
@@ -110,7 +92,7 @@ public class Chain {
         for (int i = 0; i < 5; i++){
 
             draw = stock.draw();
-            System.out.println(draw.toString());
+            System.out.println("tile is " + draw.toString());
             chain.insertLeft(draw);
 
             draw = stock.draw();
@@ -118,6 +100,7 @@ public class Chain {
             chain.insertRight(draw);
         }
 
+        System.out.println("right is " + chain.getHead().getTile().toString());
         System.out.println(chain.toString());
     }
 }
