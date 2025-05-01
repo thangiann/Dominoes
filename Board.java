@@ -61,7 +61,7 @@ public class Board {
         return;
     }
 
-    public void initiliazeBoard(Tile tile){
+    public void initiliazeBoard(Tile tile){   //puts the first tile on the board
         ChainElement ce = new ChainElement(tile);
         this.chain = new Chain(ce);
     }

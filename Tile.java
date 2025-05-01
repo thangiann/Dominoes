@@ -34,7 +34,7 @@ public class Tile {
 
     public void rotate(){
         int tmp = this.left;
-        this.left = right;
+        this.left = this.right;
         this.right = tmp;
     }
 

@@ -31,7 +31,7 @@ public class Stock {
     }
     
     //helper method
-    private void shuffle(){
+    private void shuffle(){     //this method starts from the last tile and swaps with another one that is in front of it  
         for (int i = stack.length - 1; i > 0; i--){
             int j = random.nextInt(i);
 

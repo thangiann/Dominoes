@@ -4,18 +4,38 @@ public class DominoesRound {
     
     Player player;
     Player computer;
-    Stock stock = new Stock();
-    Board board = new Board();
+    Stock stock;
+    Board board;
 
     public DominoesRound(String name){
         player = new Player(name);
         computer = new Player("Computer");
     }
 
+    //setters and getters
+    public Player getPlayer(){
+        return this.player;
+    }
+
+    public Player getComputer(){
+        return this.computer;
+    }
+
+    public Stock geStock(){
+        return this.stock;
+    }
+
+    public Board getBoard(){
+        return this.board;
+    }
+
+    //methods
     public void playRound(){
 
         Scanner in = new Scanner(System.in);
 
+        this.board = new Board();
+        this.stock = new Stock();
         player.initializeHand(stock);
         computer.initializeHand(stock);
 
@@ -31,9 +51,12 @@ public class DominoesRound {
 
             computerMove = computer.computerPlay(stock, board);
 
-            System.out.println(board.toString());
+            if (!computer.emptyHand() && playerMove) {
+                System.out.println(board.toString());
 
-            playerMove = player.play(stock, board);
+                playerMove = player.play(stock, board);
+            }
+            
             
             /* 
             System.out.println("!player.emptyHand() is " + !player.emptyHand());
@@ -49,13 +72,23 @@ public class DominoesRound {
         }
         else if (computer.emptyHand()) {
             System.out.println("Computer won! Emptied Hand");
-            computer.collectPoints(computer);
+            computer.collectPoints(player);
             printPoints();
         }
         else{
             if (computer.getPoints() > player.getPoints()) {
                 System.out.println("Computer won! No possible moves");
-
+                computer.collectPoints(player);
+                printPoints();
+            }
+            else if (computer.getPoints() < player.getPoints()) {
+                System.out.println("Player won! No possible moves");
+                player.collectPoints(computer);
+                printPoints();
+            }
+            else { //this is according to the official Dominoes rules
+                System.out.println("Draw! no possible moves");
+                System.out.println("No points are awared");
             }
         }
     }
@@ -66,8 +99,9 @@ public class DominoesRound {
         System.out.println("Computer" + " points:" + computer.getPoints());
     }
 
-    private void initializeDominoesRound(Scanner in){
-        System.out.println("Board\n");
+    
+    private void initializeDominoesRound(Scanner in){   //ask the player to put the first tile on the board
+        System.out.println("\nBoard\n"); // the "\n" are used to make the output more readable
         player.printHand();
 
         boolean first = true;
