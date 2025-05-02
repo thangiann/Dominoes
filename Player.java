@@ -1,3 +1,4 @@
+//AM 5672 Athanasios Giannopoulos
 import java.util.Random;
 import java.util.Scanner;
 
@@ -91,7 +92,14 @@ public class Player {
 
         printHand();   
         
-        boolean findMatchingTile = true;
+        boolean findMatchingTile = false;
+
+        for (Tile tile: this.hand.getHand()){
+            if(board.match(tile)){
+                findMatchingTile = true;
+                break;
+            }
+        }
 
         while (findMatchingTile) {
             int index = askPlayer();
@@ -113,7 +121,7 @@ public class Player {
             }
     }
 
-    return true;
+    return false;
 }
 
     //helper methods 
@@ -230,7 +238,7 @@ public class Player {
         //drawing until the stock is empty or there is a possible move
         while (draw != null && !board.match(draw)  ) {
             this.hand.add(draw);
-            System.out.println("Tile drawn : " + draw.toString());
+            System.out.println("Tile drawn: " + draw.toString());
             
             if (stock.isEmpty()) {
                 break;  // the  stock is empty but we check the current tile
@@ -277,7 +285,7 @@ public class Player {
                 }
             } catch (Exception e) {
                 System.out.println("Invalid input, please input a valid number");
-                in.nextLine(); // flush the invalid input, without this it goes into aN infinite loop
+                in.nextLine(); // flush the invalid input
             }
         }
     }

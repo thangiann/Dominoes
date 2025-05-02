@@ -1,3 +1,4 @@
+//AM 5672 Athanasios Giannopoulos
 import java.util.Random;
 
 public class Board {
