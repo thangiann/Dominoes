@@ -161,34 +161,35 @@ public class Player {
     
     }
 
-    private boolean unmatchedTile(Board board, Stock stock){    //this methods draws tiles until ones one of them matched to at least one end of the chain
-
+    private boolean unmatchedTile(Board board, Stock stock) {
         Tile draw = stock.draw();
-
-        if (draw != null ) {
-            System.out.println("Tile drawn : " + draw.toString());
-        }
-
-        //drawing until the stock is empty or there is a possible move
-        while (!board.match(draw) && !stock.isEmpty()) {
+    
+        while (draw != null && !board.match(draw)) {
             this.hand.add(draw);
+            System.out.println("Tile drawn: " + draw);
+    
+            if (stock.isEmpty()) {
+                break; // the  stock is empty but we check the current tile
+            }
+
             draw = stock.draw();
-            
-            if (draw != null ) {
-                System.out.println("Tile drawn : " + draw.toString());
-            }    
         }
 
-        //if there are not cards left to draw and no possible moves
-        if (!board.match(draw)) {
-            System.out.println("No possible moves");
-            return false;
-        }
-        if (board.match(draw)) {
+        if (draw != null && board.match(draw)) {
+            System.out.println("Tile drawn: " + draw);
             matchedTile(board, draw);
             return true;
+        } 
+        else {
+            if (draw == null) {
+                System.out.println("Out of stock");
+                return false;
+            }
+            else { 
+                System.out.println("No possible moves ");
+                return false;
+            }
         }
-        else{ return false;} 
     }
 
     private void computerMatchedTile(Board board, Tile tile){
@@ -225,33 +226,30 @@ public class Player {
     private boolean computerUnmatchedTile(Board board, Stock stock){
         
         Tile draw = stock.draw();
-        if (draw != null) {
-            System.out.println("Tile drawn : " + draw.toString());
-        }
-        else { return false;}
 
         //drawing until the stock is empty or there is a possible move
-        while (!board.match(draw) && !stock.isEmpty()) {
+        while (draw != null && !board.match(draw)  ) {
             this.hand.add(draw);
-            draw = stock.draw();
-
-            if (draw != null) {
-                System.out.println("Tile drawn : " + draw.toString());
+            System.out.println("Tile drawn : " + draw.toString());
+            
+            if (stock.isEmpty()) {
+                break;  // the  stock is empty but we check the current tile
             }
+
+            draw = stock.draw();
         }
 
         //if there are not cards left to draw and no possible moves
-        if (!board.match(draw)) {
-            System.out.println("No possible moves");
-            this.hand.add(draw);
-            return false;
-        }
-        else if (board.match(draw)) {
+        if (draw != null && board.match(draw)) {
+            System.out.println("Tile drawn: " + draw.toString());
             computerMatchedTile(board, draw);
             return true;
-        }
-        else{
-            System.out.println("out of stock");
+        } 
+        else {
+            if (draw != null) {
+                this.hand.add(draw); 
+            }
+            System.out.println("No possible moves");
             return false;
         }
     }

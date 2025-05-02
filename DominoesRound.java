@@ -56,13 +56,6 @@ public class DominoesRound {
 
                 playerMove = player.play(stock, board);
             }
-            
-            
-            /* 
-            System.out.println("!player.emptyHand() is " + !player.emptyHand());
-            System.out.println("!computer.emptyHand() is " + !computer.emptyHand());
-            System.out.println("playerMove is " + playerMove);
-            System.out.println("computerMove is " + computerMove); */
         }
 
         if (player.emptyHand()) {
