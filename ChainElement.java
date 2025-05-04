@@ -1,3 +1,4 @@
+//AM 5672 Athanasios Giannopoulos
 public class ChainElement {
     
     private Tile tile;
