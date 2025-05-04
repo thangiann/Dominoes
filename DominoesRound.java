@@ -42,7 +42,7 @@ public class DominoesRound {
         boolean playerMove = true;
         boolean computerMove = true;
 
-        initializeDominoesRound(in);         
+        initializeDominoesRound();         
 
         while (!player.emptyHand() && !computer.emptyHand() && (playerMove || computerMove)) {
 
@@ -69,15 +69,15 @@ public class DominoesRound {
             printPoints();
         }
         else{
-            if (computer.getPoints() > player.getPoints()) {
-                System.out.println("Computer won! No possible moves");
+            if (computer.ownPoints() < player.ownPoints()) {
                 computer.collectPoints(player);
                 printPoints();
+                System.out.println("Computer won! No possible moves");
             }
-            else if (computer.getPoints() < player.getPoints()) {
-                System.out.println("Player won! No possible moves");
+            else if (computer.ownPoints() > player.ownPoints()) {
                 player.collectPoints(computer);
                 printPoints();
+                System.out.println("Player won! No possible moves");
             }
             else { //this is according to the official Dominoes rules
                 System.out.println("Draw! no possible moves");
@@ -93,7 +93,9 @@ public class DominoesRound {
     }
 
     
-    private void initializeDominoesRound(Scanner in){   //ask the player to put the first tile on the board
+    private void initializeDominoesRound(){   //ask the player to put the first tile on the board
+        
+        Scanner in = new Scanner(System.in);
         System.out.println("\nBoard\n"); // the "\n" are used to make the output more readable
         player.printHand();
 

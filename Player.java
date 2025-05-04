@@ -97,9 +97,9 @@ public class Player {
             int index = askPlayer();
 
             if (index == -1) {
-                unmatchedTile(board, stock);
+                boolean played = unmatchedTile(board, stock);
                 findMatchingTile = false;
-                return true;
+                return played;
             }
             else{
                 
@@ -115,6 +115,14 @@ public class Player {
 
     return true;
 }
+
+    public int ownPoints(){
+        for (Tile tile:hand.getHand()){
+            this.points += tile.points();
+        }
+
+        return this.points;
+    }
 
     //helper methods 
     private void matchedTile(Board board, Tile tile){   //this methods checks if the tile selected can be played or not
@@ -167,11 +175,12 @@ public class Player {
         while (draw != null && !board.match(draw)) {
             this.hand.add(draw);
             System.out.println("Tile drawn: " + draw);
-    
+            
+
             if (stock.isEmpty()) {
                 break; // the  stock is empty but we check the current tile
             }
-
+            
             draw = stock.draw();
         }
 
@@ -182,7 +191,7 @@ public class Player {
         } 
         else {
             if (draw == null) {
-                System.out.println("Out of stock");
+                System.out.println("Out of stock and no possible moves ");
                 return false;
             }
             else { 
@@ -231,6 +240,7 @@ public class Player {
         while (draw != null && !board.match(draw)  ) {
             this.hand.add(draw);
             System.out.println("Tile drawn : " + draw.toString());
+
             
             if (stock.isEmpty()) {
                 break;  // the  stock is empty but we check the current tile
