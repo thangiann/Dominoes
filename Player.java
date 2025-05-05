@@ -92,7 +92,7 @@ public class Player {
 
         printHand();   
         
-        boolean findMatchingTile = false;
+        boolean findMatchingTile = true;
 
         for (Tile tile: this.hand.getHand()){
             if(board.match(tile)){
@@ -264,11 +264,14 @@ public class Player {
             return true;
         } 
         else {
-            if (draw != null) {
-                this.hand.add(draw); 
+            if (draw == null) {
+                System.out.println("Out of stock and no possible moves ");
+                return false;
             }
-            System.out.println("No possible moves");
-            return false;
+            else { 
+                System.out.println("No possible moves ");
+                return false;
+            }
         }
     }
 
